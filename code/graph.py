@@ -127,3 +127,5 @@ if __name__ == "__main__":
     # # time:  93.429851
     # # 1000
     # # avg_deg:  1000.0
+
+# NOTE: g2 implementation is incorrect. i.e. it is pending. redo
