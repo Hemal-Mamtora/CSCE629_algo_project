@@ -124,3 +124,6 @@ class Test:
 if __name__ == "__main__":
     pass
     # Test.run('g2')
+    # # time:  93.429851
+    # # 1000
+    # # avg_deg:  1000.0
