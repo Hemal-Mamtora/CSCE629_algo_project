@@ -100,17 +100,27 @@ class Graph:
 
         return sum_
 
+class Test:
+
+    def run(case = 'g1'):
+        deg = 6 # default
+        if case == 'g1':
+            deg = 6
+        elif case == 'g2':
+            deg = 1000 # 20% of 5000
+
+        # sanity check test
+        # currently it runs in time 0.25 seconds, and looks correct.
+        # TODO: discuss with prof and try to optimize
+        start = time.perf_counter()
+        g = Graph(5000, deg)
+        end = time.perf_counter()
+
+        print("time: ", (end - start))
+        print(g.avg_deg)
+        print("avg_deg: ", g.calculate_total_deg() / g.n)
+
 
 if __name__ == "__main__":
-    
-    # sanity check test
-    # currently it runs in time 0.25 seconds, and looks correct.
-    # TODO: discuss with prof and try to optimize
-    start = time.perf_counter()
-    g = Graph(5000, 6)
-    end = time.perf_counter()
-
-    print("time: ", (end - start))
-    print(g.avg_deg)
-    print("avg_deg: ", g.calculate_total_deg() / g.n)
-    
+    pass
+    # Test.run('g2')
