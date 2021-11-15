@@ -4,7 +4,7 @@ from typing import Tuple
 
 class Edge:
     def __init__(self, node = -1, weight = -1, next_ = None):
-        self.node = node
+        self.node = node # the next node this edge is pointing to
         self.weight = weight
         self.next = next_
 
@@ -31,6 +31,15 @@ class Node(Edge):
             e = e.next
         
         return deg
+
+
+class AdjacencyList:
+    def __init__(self, node: Node) -> None:
+        self.node = node
+        
+
+    def insert(self, edge: Edge) -> Edge:
+        pass
 
 class Graph:
     def __init__(self, vertex_count = 100, type = 'g1', **params):
@@ -145,25 +154,26 @@ class Test:
         print("avg_deg: ", g.calculate_total_deg() / g.n)
 
 
-if __name__ == "__main__":
-    # Test.run("g2")
-    # Test.run("g1")
-    # # time:  93.429851
-    # # 1000
-    # # avg_deg:  1000.0
+# if __name__ == "__main__":
+#     pass
+#     # Test.run("g2")
+#     # Test.run("g1")
+#     # # time:  93.429851
+#     # # 1000
+#     # # avg_deg:  1000.0
 
-    # start = time.perf_counter()
-    # # g = Graph(5000, type="g1", average_degree=6)
-    # g = Graph(5000, type="g2", percent=20)
-    # end = time.perf_counter()
+#     # start = time.perf_counter()
+#     # # g = Graph(5000, type="g1", average_degree=6)
+#     # g = Graph(5000, type="g2", percent=20)
+#     # end = time.perf_counter()
 
-    # print("time: ", (end - start))
-    # # print(g.avg_deg)
-    # print("avg_deg: ", g.calculate_total_deg() / g.n)
+#     # print("time: ", (end - start))
+#     # # print(g.avg_deg)
+#     # print("avg_deg: ", g.calculate_total_deg() / g.n)
 
 
-# NOTE: g2 implementation is incorrect. i.e. it is pending. redo
-# (algo_proj) PS D:\Fall 2021\CSCE 629 Algo\project> python .\code\graph.py
-# time:  124.4710679
-# avg_deg:  1114.914
-# (algo_proj) PS D:\Fall 2021\CSCE 629 Algo\project> 
+# # NOTE: g2 implementation is incorrect. i.e. it is pending. redo
+# # (algo_proj) PS D:\Fall 2021\CSCE 629 Algo\project> python .\code\graph.py
+# # time:  124.4710679
+# # avg_deg:  1114.914
+# # (algo_proj) PS D:\Fall 2021\CSCE 629 Algo\project> 
