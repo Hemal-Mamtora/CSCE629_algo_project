@@ -72,6 +72,19 @@ class Heap():
         self.heapify_down(0)
         return out, out_val
 
+    def delete(self, node):
+        index = self.P[node]
+        if index == -1:
+            print(node, "is not present in the heap")
+            return -1, -1
+
+        out, out_val = self.H[index], self.D[self.H[index]]
+        self.H[index] = self.H[self.last_index]
+        self.last_index -= 1
+        self.heapify_down(index)
+        return out, out_val
+
+
 class Test:
     def run():
         h = Heap(5000)
@@ -95,7 +108,12 @@ class Test:
         for i in pairs:
             h.insert(i[0], i[1])
 
-        for i in pairs:
+        # h.delete(12321)
+        h.delete(800)
+
+        for j, i in enumerate(pairs):
+            if j == len(pairs) - 1 - 2:
+                break
             a, b = h.remove()
             print(b, a)
 
