@@ -21,7 +21,7 @@ class DijkstrasAlgorithm:
         
         w: Edge = self.G.adjacency_list[self.s].get_next()
 
-        fringes = [w.node]
+        fringes = []
 
         while(w): # for each edge (s, w)
             self.status[w.node] = Status.FRINGE
@@ -32,13 +32,15 @@ class DijkstrasAlgorithm:
             w = w.get_next()
         
         while(fringes):
+            # print("before len(fringes): ", len(fringes))
             v = self.v_with_largest_bandwidth(fringes)
+            # print("after len(fringes): ", len(fringes))
             self.status[v] = Status.INTREE
 
-            print(v)
+            # print(v)
 
             if v == self.t:
-                print("Here")
+                # print("Here")
                 break
 
             w: Edge = self.G.adjacency_list[v].get_next() # repeat, TODO: extract a method
@@ -47,17 +49,11 @@ class DijkstrasAlgorithm:
                     self.status[w.node] = Status.FRINGE
                     fringes.append(w.node)
                     self.bw[w.node] = min(self.bw[v], w.weight)
-                    self.dad[w] = v
+                    self.dad[w.node] = v
                 elif (self.status[w.node] == Status.FRINGE and 
                         self.bw[w.node] < min(self.bw[v], w.weight)): # w.weight means cap(v, w)
-                    self.dad[w] = v
+                    self.dad[w.node] = v
                     self.bw[w.node] = min(self.bw[v], w.weight)
-
-
-                self.status[w.node] = Status.FRINGE
-                fringes.append(w.node) # only val
-                self.dad[w.node] = v
-                self.bw[w.node] = w.weight # weight means capacity
 
                 w = w.get_next()
         
@@ -69,6 +65,7 @@ class DijkstrasAlgorithm:
             while(x != self.s):
                 print(x)
                 x = self.dad[x]
+            print(x)
 
         return
 
