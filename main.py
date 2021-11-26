@@ -1,5 +1,5 @@
-from code.dijkstras import DijkstrasAlgorithm
-from code.graph import Graph
+from src.dijkstras import DijkstrasAlgorithm
+from src.graph import Graph
 
 def main():
     G = Graph(5000, type="g1", average_degree=6)

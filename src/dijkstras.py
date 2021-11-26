@@ -34,7 +34,9 @@ class DijkstrasAlgorithm:
         while(fringes):
             v = self.v_with_largest_bandwidth(fringes)
             self.status[v] = Status.INTREE
-            
+
+            print(v)
+
             if v == self.t:
                 print("Here")
                 break
@@ -46,7 +48,8 @@ class DijkstrasAlgorithm:
                     fringes.append(w.node)
                     self.bw[w.node] = min(self.bw[v], w.weight)
                     self.dad[w] = v
-                elif self.status[w.node] == Status.FRINGE and self.bw[w.node] < min(self.bw[v], w.weight): # w.weight means cap(v, w)
+                elif (self.status[w.node] == Status.FRINGE and 
+                        self.bw[w.node] < min(self.bw[v], w.weight)): # w.weight means cap(v, w)
                     self.dad[w] = v
                     self.bw[w.node] = min(self.bw[v], w.weight)
 
