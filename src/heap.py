@@ -66,6 +66,9 @@ class Heap():
                     self.heapify_down(self.right(index))
 
     def remove(self):
+        if self.last_index < 0:
+            print("empty heap")
+            return -1, -1
         out, out_val = self.H[0], self.D[self.H[0]]
         self.H[0] = self.H[self.last_index]
         self.last_index -= 1
@@ -83,6 +86,12 @@ class Heap():
         self.last_index -= 1
         self.heapify_down(index)
         return out, out_val
+
+    def maximum(self):
+        if self.last_index < 0:
+            print("empty heap")
+            return -1, -1
+        return self.H[0], self.D[self.H[0]]
 
 
 class Test:
@@ -110,11 +119,16 @@ class Test:
 
         # h.delete(12321)
         h.delete(800)
+        h.delete(33)
+        h.delete(80)
 
         for j, i in enumerate(pairs):
-            if j == len(pairs) - 1 - 2:
-                break
+            # if j == len(pairs) - 1 - 2:
+            #     break
+            # a, b = h.maximum()
+            # a, b = h.delete(a)
             a, b = h.remove()
+            # h.insert(a, b)
             print(b, a)
 
 if __name__ == "__main__":
