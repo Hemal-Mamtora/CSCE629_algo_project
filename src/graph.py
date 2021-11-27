@@ -43,6 +43,7 @@ class AdjacencyList:
 
 class Graph:
     def __init__(self, vertex_count = 100, type = 'g1', **params):
+        # random.seed(0)
         self.n = vertex_count
         self.adjacency_list = []
         self.type = type
@@ -70,7 +71,8 @@ class Graph:
         required_degree = percent*0.01*self.n
         threshold = 0.9 * required_degree
         for node in range(self.n):
-
+            # print(node, end=" ")
+            # print(degree[node], end=" ")
             while(degree[node] < threshold):
                 node2 = random.randint(0, self.n - 1)
                 if node == node2:
@@ -81,6 +83,8 @@ class Graph:
                     degree[node2] += 1
                     degree[node] += 1
                     self.pairs.add(pair)
+            # print(degree[node])
+
 
     def create_graph_g1(self, current_avg_degree, required_avg_degree):
         temp_avg_deg = current_avg_degree # since in a cycle, each vertex is connected to every other vertex
