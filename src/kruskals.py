@@ -1,5 +1,6 @@
 from enum import IntEnum
 from .graph import Edge, Graph, Node
+from .heap import EdgeHeap
 
 class Color(IntEnum):
     WHITE = 0
@@ -24,7 +25,10 @@ class KruskalsAlgorithm:
         edges = self.G.get_edges()
         # edges = self.heapsort(edges)
         # TODO: replace it with heapsort
-        edges = sorted(edges, key= lambda x: x[0], reverse=True)
+        h = EdgeHeap()
+        h.insert_all(edges)
+        # edges = h.heapsort()
+        # edges = sorted(edges, key= lambda x: x[0], reverse=True)
 
         # TODO: can i put this inside the initialization?
         for i in range(self.G.n):
@@ -35,7 +39,7 @@ class KruskalsAlgorithm:
 
         self.result = []
         while(edge_count < self.G.n - 1):
-            edge = edges[i]
+            edge = h.remove()
             i = i+1
             weight, u, v = edge
             r1 = self.find(u)

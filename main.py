@@ -26,15 +26,28 @@ def main():
     # Status: infinite loop, need to debug
 
 def test_main():
+    
+    a = time.perf_counter()
     G = Graph(5000, type="g1", average_degree=6)
-    dij_n2, dij_heap, k = test(G, times = 10)
+    b = time.perf_counter()
     print("Sparse Graph")
+    print("Creation Time: ", (b - a))
+    dij_n2, dij_heap, k = test(G, times = 10)
+    
+    # print("Sparse Graph")
+    # print("Creation Time: ", (b - a))
     print("d_without_heap", dij_n2)
     print("d_heap", dij_heap)
     print("k", k)
+    
+    a = time.perf_counter()
     G = Graph(5000, type="g2", percent=20)
-    dij_n2, dij_heap, k = test(G, times = 10)
+    b = time.perf_counter()
     print("Dense Graph")
+    print("Creation Time: ", (b - a))
+
+    dij_n2, dij_heap, k = test(G, times = 10)
+
     print("d_without_heap", dij_n2)
     print("d_heap", dij_heap)
     print("k", k)
@@ -44,6 +57,7 @@ def test(G, times = 100):
     dij_heap = 0
     k = 0
     for i in range(times):
+        print(i)
         s = random.randint(0, 4999)
         t = random.randint(0, 4999)
         a = time.perf_counter()
