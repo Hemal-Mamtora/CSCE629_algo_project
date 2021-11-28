@@ -51,13 +51,18 @@ class KruskalsAlgorithm:
         # print(self.result)
         self.create_mst()
         self.dfs()
-        x = self.t
-        # while(x != self.s):
-        #     print(x)
-        #     x = self.dad[x]
-        # print(x)
+
+        if self.reached == True:
+            x = self.t
+            # while(x != self.s):
+            #     print(x)
+            #     x = self.dad[x]
+            # print(x)
+        else:
+            print("no s-t path found")
 
     def dfs(self):
+        self.reached = False
         self.color = [Color.WHITE for i in range(self.G.n)]
         self.dad = [-1 for i in range(self.G.n)]
         self.dfs_recursive(self.s)
@@ -70,6 +75,7 @@ class KruskalsAlgorithm:
             if self.color[w] == Color.WHITE:
                 self.dad[w] = v
                 if w == self.t:
+                    self.reached = True
                     return
                 self.dfs_recursive(w)
         self.color[v] = Color.BLACK
