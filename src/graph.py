@@ -64,6 +64,8 @@ class Graph:
         else:
             print("please provide graph type from g1 or g2")
             raise Exception
+        
+        # self.print_graph()
 
     def create_graph_g2(self, percent):
         degree = [2 for i in range(self.n)]
@@ -85,7 +87,6 @@ class Graph:
                     self.pairs.add(pair)
             # print(degree[node])
 
-
     def create_graph_g1(self, current_avg_degree, required_avg_degree):
         temp_avg_deg = current_avg_degree # since in a cycle, each vertex is connected to every other vertex
 
@@ -104,7 +105,6 @@ class Graph:
             self.pairs.add(pair)
 
             temp_avg_deg += 2 / self.n
-
 
     def create_adjacency_list(self):
         for i in range(self.n):
@@ -135,6 +135,23 @@ class Graph:
             sum_ += self.adjacency_list[i].degree()
 
         return sum_
+
+    def get_edges(self):
+        # TODO: get rid of set, will a simple, list() work?
+        edges = set()
+        for linked_list in (self.adjacency_list):
+            v = linked_list
+            edge = v.next
+            while(edge):
+                if v.node < edge.node: # to only consider the edge once
+                    edges.add((edge.weight, v.node, edge.node))
+                edge = edge.next
+        return list(edges)
+
+    def print_graph(self):
+        edges = self.get_edges()
+        print(edges)
+
 
 class Test:
 

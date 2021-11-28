@@ -70,10 +70,10 @@ class DijkstrasAlgorithm:
 
         else:
             x = self.t
-            while(x != self.s):
-                print(x)
-                x = self.dad[x]
-            print(x)
+            # while(x != self.s):
+            #     print(x)
+            #     x = self.dad[x]
+            # print(x)
 
         return
 
@@ -129,10 +129,10 @@ class DijkstrasAlgorithm:
 
         else:
             x = self.t
-            while(x != self.s):
-                print(x)
-                x = self.dad[x]
-            print(x)
+            # while(x != self.s):
+            #     print(x)
+            #     x = self.dad[x]
+            # print(x)
 
         return
 

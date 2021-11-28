@@ -103,6 +103,9 @@ class Heap():
         return self.H[0], self.D[self.H[0]]
 
 
+class EdgeHeap():
+    pass
+
 class Test:
     def run():
         h = Heap(5000)
