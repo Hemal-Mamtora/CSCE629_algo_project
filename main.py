@@ -97,42 +97,42 @@ def main():
 
 
 def test_main():
-    # for i in range(0, 200):
-    random.seed(25)
-    print("I:", 25)
-    # for i in range(5):
-    n = 10
-    average_degree = 4
-    percent = 50
+    for i in range(0, 500):
+        random.seed(i)
+        print("I:", 25)
+        # for i in range(5):
+        n = 100
+        average_degree = 4
+        percent = 20
 
-    a = time.perf_counter()
-    G = Graph(n, type="g1", average_degree=average_degree)
-    b = time.perf_counter()
-    print("Sparse Graph")
-    print("Creation Time: ", (b - a))
-    dij_n2, dij_heap, k = test(G, n, times = 5)
-    
-    # if dij_n2 == []:
-    #     continue
-    # print("Sparse Graph")
-    # print("Creation Time: ", (b - a))
-    print("d_without_heap", dij_n2)
-    print("d_heap", dij_heap)
-    print("k", k)
-    
-    a = time.perf_counter()
-    G = Graph(n, type="g2", percent=percent)
-    b = time.perf_counter()
-    print("Dense Graph")
-    print("Creation Time: ", (b - a))
+        a = time.perf_counter()
+        G = Graph(n, type="g1", average_degree=average_degree)
+        b = time.perf_counter()
+        print("Sparse Graph")
+        print("Creation Time: ", (b - a))
+        dij_n2, dij_heap, k = test(G, n, times = 5)
+        
+        # if dij_n2 == []:
+        #     continue
+        # print("Sparse Graph")
+        # print("Creation Time: ", (b - a))
+        print("d_without_heap", dij_n2)
+        print("d_heap", dij_heap)
+        print("k", k)
+        
+        a = time.perf_counter()
+        G = Graph(n, type="g2", percent=percent)
+        b = time.perf_counter()
+        print("Dense Graph")
+        print("Creation Time: ", (b - a))
 
-    dij_n2, dij_heap, k = test(G, n, times = 5)
-    # if dij_n2 == []:
-    #     continue
-    print("d_without_heap", dij_n2)
-    print("d_heap", dij_heap)
-    print("k", k)
-        # input()
+        dij_n2, dij_heap, k = test(G, n, times = 5)
+        # if dij_n2 == []:
+        #     continue
+        print("d_without_heap", dij_n2)
+        print("d_heap", dij_heap)
+        print("k", k)
+            # input()
 
 def test(G, n, times = 5):
     dij_n2 = []

@@ -43,9 +43,14 @@ class DijkstrasAlgorithm:
             self.status[v] = Status.INTREE
 
             # print(v)
-
             w: Edge = self.G.adjacency_list[v].get_next() # repeat, TODO: extract a method
             while(w): # for each edge (v, w)
+                if v == 2 and w.node == 6:
+                    print("Got Here")
+                if v == 2 and w.node == 7:
+                    print("now here")
+                if w == 3:
+                    print("please")
                 if self.status[w.node] == Status.UNSEEN:
                     self.status[w.node] = Status.FRINGE
                     self.bw[w.node] = min(self.bw[v], w.weight)

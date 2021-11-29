@@ -32,15 +32,15 @@ class Heap():
         self.H[self.last_index] = node
         self.D[node] = capacity
         self.P[node] = self.last_index
-        self.heapify_up()
+        self.heapify_up(self.last_index)
 
     def swap(self, a, b):
         self.H[a], self.H[b] = self.H[b], self.H[a]
         self.P[self.H[a]] = a
         self.P[self.H[b]] = b
 
-    def heapify_up(self):
-        index = self.last_index
+    def heapify_up(self, index):
+        # index = self.last_index
         while self.parent(index) >= 0 and self.D[self.H[index]] > self.D[self.H[self.parent(index)]]:
             self.swap(index, self.parent(index))
             index = self.parent(index)
@@ -96,7 +96,12 @@ class Heap():
         self.P[self.H[index]] = index
         
         self.last_index -= 1
-        self.heapify_down(index)
+        p = self.parent(index)
+        if p >= 0 and self.D[self.H[index]] > self.D[self.H[p]]:
+            self.heapify_up(index)
+        else:
+            self.heapify_down(index)
+
         return out, out_val
 
     def maximum(self):
