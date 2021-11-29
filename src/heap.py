@@ -1,8 +1,8 @@
 class Heap():
     def __init__(self, n) -> None:
-        self.H = [-1 for i in range(n)]
-        self.D = [-1 for i in range(n)]
-        self.P = [-1 for i in range(n)]
+        self.H = [None for i in range(n)]
+        self.D = [None for i in range(n)]
+        self.P = [None for i in range(n)]
         self.max_size = n
         self.last_index = -1
 
@@ -21,8 +21,8 @@ class Heap():
     def parent(self, i: int) -> int:
         return (i - 1) // 2
 
-    def is_leaf(self, i: int) -> bool:
-        return i <= (self.last_index+1) and i >= (self.last_index+1)//2
+    # def is_leaf(self, i: int) -> bool:
+    #     return i <= (self.last_index+1) and i >= (self.last_index+1)//2
 
     # def get_max(self):
     #     pass
@@ -30,7 +30,7 @@ class Heap():
     def insert(self, node, capacity):
         self.last_index  += 1
         self.H[self.last_index] = node
-        self.D[node] = capacity # TODO: check can it be taken outside of the heap code ?
+        self.D[node] = capacity
         self.P[node] = self.last_index
         self.heapify_up()
 
@@ -46,7 +46,7 @@ class Heap():
             index = self.parent(index)
 
     def heapify_down(self, index):
-        if not self.is_leaf(index):
+        if self.has_left(index):
 
             l = self.left(index)
             r = self.right(index)
@@ -60,11 +60,11 @@ class Heap():
             
             if self.D[self.H[index]] < max_:
                 if swap_candidate == "left":
-                    self.swap(index, self.left(index))
-                    self.heapify_down(self.left(index))
+                    self.swap(index, l)
+                    self.heapify_down(l)
                 else:
-                    self.swap(index, self.right(index))
-                    self.heapify_down(self.right(index))
+                    self.swap(index, r)
+                    self.heapify_down(r)
 
     # def remove(self):
     #     """
@@ -75,6 +75,7 @@ class Heap():
     #         return -1, -1
     #     out, out_val = self.H[0], self.D[self.H[0]]
     #     self.H[0] = self.H[self.last_index]
+    #     self.P[self.H[0]] = 0
     #     self.last_index -= 1
     #     self.heapify_down(0)
     #     return out, out_val
@@ -91,7 +92,9 @@ class Heap():
 
         out, out_val = self.H[index], self.D[self.H[index]]
         self.H[index] = self.H[self.last_index]
+        
         self.P[self.H[index]] = index
+        
         self.last_index -= 1
         self.heapify_down(index)
         return out, out_val

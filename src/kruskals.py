@@ -55,17 +55,29 @@ class KruskalsAlgorithm:
         # print(self.result)
         self.create_mst()
         self.dfs()
-
+        max_bw = -1
+        path = []
         if self.reached == True:
+            # max_bw = min(self.result, key=lambda x: x[0])
+            # print("bandwidth: ", max_bw[0])
             x = self.t
-            # while(x != self.s):
-            #     print(x)
-            #     x = self.dad[x]
+            max_bw = float("inf")
+            while(x != self.s):
+                max_bw = min(max_bw, self.temp_wt[(x, self.dad[x])])
+                # print(x)
+                path.append(x)
+                x = self.dad[x]
             # print(x)
+            path.append(x)
+            # print("bandwidth: ", max_bw)
         else:
             print("no s-t path found")
-
+        
+        return max_bw, path
+        
+        
     def dfs(self):
+        self.temp_wt = {}
         self.reached = False
         self.color = [Color.WHITE for i in range(self.G.n)]
         self.dad = [-1 for i in range(self.G.n)]
@@ -78,6 +90,7 @@ class KruskalsAlgorithm:
 
             if self.color[w] == Color.WHITE:
                 self.dad[w] = v
+                self.temp_wt[(v, w)] = self.temp_wt[(w, v)] = weight
                 if w == self.t:
                     self.reached = True
                     return
@@ -94,9 +107,6 @@ class KruskalsAlgorithm:
             T[b].append((a, w))
 
         self.T = T
-
-    def heapsort(self, edges):
-        pass
 
     def makeset(self, v):
         self.p[v] = -1

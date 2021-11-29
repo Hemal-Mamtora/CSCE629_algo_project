@@ -42,12 +42,7 @@ class DijkstrasAlgorithm:
             # print("after len(fringes): ", len(fringes))
             self.status[v] = Status.INTREE
 
-
             # print(v)
-
-            # if v == self.t:
-            #     # print("Here")
-            #     break
 
             w: Edge = self.G.adjacency_list[v].get_next() # repeat, TODO: extract a method
             while(w): # for each edge (v, w)
@@ -67,15 +62,15 @@ class DijkstrasAlgorithm:
         
         if self.status[self.t] != Status.INTREE:
             print("no s-t path")
-
+            return -1, []
         else:
-            x = self.t
+            # print("bandwidth: ", self.bw[self.t])
+            # x = self.t
             # while(x != self.s):
             #     print(x)
             #     x = self.dad[x]
             # print(x)
-
-        return
+            return self.output()
 
 
     def run(self):
@@ -106,10 +101,6 @@ class DijkstrasAlgorithm:
 
             # print(v)
 
-            # if v == self.t:
-            #     # print("Here")
-            #     break
-
             w: Edge = self.G.adjacency_list[v].get_next() # repeat, TODO: extract a method
             while(w): # for each edge (v, w)
                 if self.status[w.node] == Status.UNSEEN:
@@ -126,16 +117,28 @@ class DijkstrasAlgorithm:
         
         if self.status[self.t] != Status.INTREE:
             print("no s-t path")
-
+            return -1, []
         else:
-            x = self.t
+            # print("bandwidth: ", self.bw[self.t])
+            # x = self.t
             # while(x != self.s):
             #     print(x)
             #     x = self.dad[x]
             # print(x)
 
-        return
+            return self.output()
 
+    def output(self):
+        path = []
+        bw = self.bw[self.t]
+        x = self.t
+        while(x != self.s):
+            # print(x)
+            path.append(x)
+            x = self.dad[x]
+        # print(x)
+        path.append(x)
+        return bw, path
 
     def v_with_largest_bandwidth(self, fringes):
         max_bw = float("-inf")

@@ -14,6 +14,7 @@ class Edge:
     def get_next(self):
         return self.next
 
+
 class Node(Edge):
     def __init__(self, val = -1):
         super().__init__(val)
@@ -41,15 +42,13 @@ class AdjacencyList:
     def insert(self, edge: Edge) -> Edge:
         pass
 
+
 class Graph:
     def __init__(self, vertex_count = 100, type = 'g1', **params):
-        # random.seed(0)
         self.n = vertex_count
         self.adjacency_list = []
         self.type = type
-        # TODO: ask regarding below method to eliminate duplicates
-        # TODO: find better way than set, use some more rudimentary data structure, or is it fine?
-        self.pairs = set() 
+        self.pairs = [[False for _ in range(self.n)] for _ in range(self.n)]
 
         # creating the adjacency list
         self.create_adjacency_list()
@@ -67,67 +66,72 @@ class Graph:
         
         # self.print_graph()
 
+
     def create_graph_g2(self, percent):
         degree = [2 for i in range(self.n)]
 
-        required_degree = percent*0.01*self.n
-        threshold = 0.9 * required_degree
-        for node in range(self.n):
+        required_degree = int(percent*0.01*self.n)
+        threshold = int(0.9 * required_degree)
+        for node1 in range(self.n):
             # print(node, end=" ")
             # print(degree[node], end=" ")
-            while(degree[node] < threshold):
+            while(degree[node1] < threshold):
                 node2 = random.randint(0, self.n - 1)
-                if node == node2:
+                if node1 == node2:
                     continue
-                pair = (node, node2) if node < node2 else (node2, node)
-                if pair not in self.pairs:
-                    self.insert_edge(node, node2)
+
+                # n1, n2 = (node, node2) if node < node2 else (node2, node)
+
+                if not self.pairs[node1][node2]:
+                    self.insert_edge(node1, node2)
+                    degree[node1] += 1
                     degree[node2] += 1
-                    degree[node] += 1
-                    self.pairs.add(pair)
             # print(degree[node])
 
+
     def create_graph_g1(self, current_avg_degree, required_avg_degree):
-        temp_avg_deg = current_avg_degree # since in a cycle, each vertex is connected to every other vertex
+        # since in a cycle, each vertex is connected to every other vertex
+        temp_avg_deg = current_avg_degree
 
-        while(abs(temp_avg_deg - required_avg_degree) > 0.0001):
-            x = random.randint(0, self.n - 1)
-            y = random.randint(0, self.n - 1)
+        while(required_avg_degree - temp_avg_deg > 0.0001):
+            node1 = random.randint(0, self.n - 1)
+            node2 = random.randint(0, self.n - 1)
 
-            if x == y:
+            if node1 == node2:
                 continue
 
-            pair = (x, y) if x < y else (y, x)
-
-            if pair in self.pairs:
+            if self.pairs[node1][node2]:
                 continue
-            self.insert_edge(x, y)
-            self.pairs.add(pair)
+            self.insert_edge(node1, node2)
 
             temp_avg_deg += 2 / self.n
+
 
     def create_adjacency_list(self):
         for i in range(self.n):
             self.adjacency_list.append(Node(i))
 
-    def insert_edge(self, n1: Node, n2: Node) -> Tuple[int, int]:
-        w = random.randint(1, 10)    # NOTE: weight is currently bounded by 10 # TODO: change this
 
-        e1 = Edge(node = n1, weight = w)
-        self.adjacency_list[n2].insert(e1)
+    def insert_edge(self, node1: Node, node2: Node) -> Tuple[int, int]:
+        # I feel that a random positive number bounded by `bound` is sufficient for the demo
+        bound = 500
+        w = random.randint(1, bound)
 
-        e2 = Edge(node = n2, weight = w)
-        self.adjacency_list[n1].insert(e2)
+        e1 = Edge(node = node1, weight = w)
+        self.adjacency_list[node2].insert(e1)
 
-        pair = (n1, n2) if n1 < n2 else (n2, n1)
-        return pair
+        e2 = Edge(node = node2, weight = w)
+        self.adjacency_list[node1].insert(e2)
+
+        self.pairs[node1][node2] = True
+        self.pairs[node2][node1] = True
+
 
     def create_cycle(self):
         for i in range(self.n):
             n = (i + 1) % self.n
             self.insert_edge(i, n)
-            pair = (i, n) if i < n else (n, i)
-            self.pairs.add(pair)
+
 
     def calculate_total_deg(self):
         sum_ = 0
@@ -136,17 +140,19 @@ class Graph:
 
         return sum_
 
+
     def get_edges(self):
         # TODO: get rid of set, will a simple, list() work?
-        edges = set()
+        edges = []
         for linked_list in (self.adjacency_list):
             v = linked_list
             edge = v.next
             while(edge):
                 if v.node < edge.node: # to only consider the edge once
-                    edges.add((edge.weight, v.node, edge.node))
+                    edges.append((edge.weight, v.node, edge.node))
                 edge = edge.next
-        return list(edges)
+        return edges
+
 
     def print_graph(self):
         edges = self.get_edges()
