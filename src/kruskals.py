@@ -72,7 +72,7 @@ class KruskalsAlgorithm:
             # print("bandwidth: ", max_bw)
         else:
             print("no s-t path found")
-        
+        path.reverse() # just to reverse so that it shows s - t in O(n) time
         return max_bw, path
         
         
@@ -114,8 +114,13 @@ class KruskalsAlgorithm:
 
     def find(self, v):
         w = v
+        S = []
         while(self.p[w] != -1):
+            S.append(w)
             w = self.p[w]
+        while(S):
+            u = S.pop()
+            self.p[u] = w
         return w
 
     def union(self, r1, r2):
