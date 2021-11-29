@@ -22,6 +22,7 @@ dij_heap_str = "dijkstras with heap:"
 k_str = "kruskals:"
 
 def main():
+    df = None
     # df = pd.DataFrame(columns=[
     #     "itr_num",
     #     "graph_type",
@@ -39,7 +40,7 @@ def main():
         print("-"*80)
         print("\t\t", "-"*10, "Graph number: ", (i+1), "-"*10,)
         print("-"*80)
-        n = 5000
+        n = 50
         average_degree = 6
         percent = 20
 
@@ -54,7 +55,7 @@ def main():
         print("Creation Time: ", sparse_creation_time)
 
         sparse_out = test(G, n, i ,True, times, df, sparse_creation_time)
-        df = sparse_out[-1]
+        # df = sparse_out[-1]
 
         a = time.perf_counter()
         G = Graph(n, type="g2", percent=percent)
@@ -67,13 +68,13 @@ def main():
         print("Creation Time: ", dense_creation_time)
 
         dense_out = test(G, n, i, False, times, df, dense_creation_time)
-        df = dense_out[-1]
+    #     df = dense_out[-1]
 
-    df_temp = df.loc[:, df.columns != 'max_bw_path']
+    # df_temp = df.loc[:, df.columns != 'max_bw_path']
 
-    print(df.loc[:, df.columns != 'max_bw_path'])
+    # print(df.loc[:, df.columns != 'max_bw_path'])
 
-    analysis = analyse(df_temp)
+    # analysis = analyse(df_temp)
 
     
 
